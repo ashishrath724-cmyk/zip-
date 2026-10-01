@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login Page</title>
+
+    <style>
+        /* =========================
+           CSS
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: linear-gradient(
+                135deg,
+                #667eea,
+                #764ba2
+            );
+        }
+
+        .login-container {
+            width: 350px;
+            padding: 35px;
+
+            background: white;
+            border-radius: 15px;
+
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .login-container p {
+            text-align: center;
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        .input-box {
+            margin-bottom: 20px;
+        }
+
+        .input-box label {
+            display: block;
+            margin-bottom: 7px;
+
+            color: #333;
+            font-weight: bold;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 12px;
+
+            border: 1px solid #ccc;
+            border-radius: 8px;
+
+            outline: none;
+            font-size: 15px;
+        }
+
+        .input-box input:focus {
+            border-color: #667eea;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+
+            border: none;
+            border-radius: 8px;
+
+            background: #667eea;
+            color: white;
+
+            font-size: 16px;
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #5568d8;
+        }
+
+        /* =========================
+           POPUP MESSAGE
+        ========================= */
+
+        .popup {
+            position: fixed;
+
+            top: 30px;
+            right: 30px;
+
+            padding: 15px 25px;
+
+            border-radius: 8px;
+
+            color: white;
+            font-weight: bold;
+
+            transform: translateX(150%);
+            transition: 0.4s;
+        }
+
+        .popup.show {
+            transform: translateX(0);
+        }
+
+        .popup.success {
+            background: #28a745;
+        }
+
+        .popup.error {
+            background: #dc3545;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         LOGIN FORM
+    ========================= -->
+
+    <div class="login-container">
+
+        <h2>Welcome Back</h2>
+
+        <p>Login to your account</p>
+
+        <form id="loginForm">
+
+            <div class="input-box">
+                <label for="username">Username</label>
+
+                <input
+                    type="text"
+                    id="username"
+                    placeholder="Enter username"
+                >
+            </div>
+
+            <div class="input-box">
+                <label for="password">Password</label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter password"
+                >
+            </div>
+
+            <button type="submit">
+                Login
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- =========================
+         POPUP
+    ========================= -->
+
+    <div id="popup" class="popup">
+        <span id="popupMessage"></span>
+    </div>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+        const loginForm = document.getElementById("loginForm");
+
+        const popup = document.getElementById("popup");
+
+        const popupMessage =
+            document.getElementById("popupMessage");
+
+
+        loginForm.addEventListener("submit", function(event) {
+
+            // Prevent page refresh
+            event.preventDefault();
+
+
+            // Get input values
+            const username =
+                document.getElementById("username").value.trim();
+
+            const password =
+                document.getElementById("password").value;
+
+
+            // Demo username and password
+            const correctUsername = "admin";
+            const correctPassword = "12345";
+
+
+            // Check empty fields
+            if (username === "" || password === "") {
+
+                showPopup(
+                    "Please fill all fields",
+                    "error"
+                );
+
+            }
+
+            // Check login details
+            else if (
+                username === correctUsername &&
+                password === correctPassword
+            ) {
+
+                showPopup(
+                    "Login Successful!",
+                    "success"
+                );
+
+            }
+
+            // Wrong username/password
+            else {
+
+                showPopup(
+                    "Invalid username or password",
+                    "error"
+                );
+            }
+
+        });
+
+
+        // Function to show popup
+        function showPopup(message, type) {
+
+            popupMessage.textContent = message;
+
+            popup.className =
+                "popup " + type + " show";
+
+
+            // Hide popup after 3 seconds
+            setTimeout(function() {
+
+                popup.classList.remove("show");
+
+            }, 3000);
+
+        }
+
+    </script>
+
+</body>
+</html>
